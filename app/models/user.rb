@@ -2,7 +2,7 @@ class User < ApplicationRecord
   include Devise::JWT::RevocationStrategies::JTIMatcher
   
   acts_as_voter
-  acts_as_votable
+  acts_as_votable cacheable_strategy: :update_columns
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
