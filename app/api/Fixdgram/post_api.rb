@@ -30,7 +30,15 @@ module Fixdgram
       get '/:post_id' do
         post = Post.includes(:user, :comments).find(params[:post_id])
         data = post.as_json(include: [:user, :comments])
-        success_response(data: data)
+      
+        options = { serializer: PostSerializer }
+        serializable_resource = ActiveModelSerializers::SerializableResource.new(post, options)
+
+        byebug
+
+        data
+
+        # success_response(data: data)
       end
     end
   end

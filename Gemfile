@@ -6,12 +6,14 @@ ruby "3.1.0"
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.0.5"
 
+gem 'active_model_serializers', '~> 0.10.13'
 gem 'acts_as_votable'
 gem "cancancan"
 gem "devise"
 gem "devise-jwt"
 gem "faraday"
 gem "grape"
+gem "grape-active_model_serializers"
 gem "pagy"
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
