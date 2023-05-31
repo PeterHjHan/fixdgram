@@ -66,6 +66,7 @@ GEM
       i18n (>= 1.6, < 2)
       minitest (>= 5.1)
       tzinfo (~> 2.0)
+    acts_as_votable (0.14.0)
     bcrypt (3.1.18)
     bindex (0.8.1)
     bootsnap (1.16.0)
@@ -271,6 +272,7 @@ PLATFORMS
   x86_64-darwin-21
 
 DEPENDENCIES
+  acts_as_votable
   bootsnap
   byebug
   cancancan
