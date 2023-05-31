@@ -10,6 +10,7 @@ gem 'acts_as_votable'
 gem "cancancan"
 gem "devise"
 gem "devise-jwt"
+gem "faraday"
 gem "grape"
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
