@@ -10,9 +10,11 @@ module Fixdgram
         end
       end
       post do
+        authenticate!
         title = params[:data][:title]
         description = params[:data][:description]
         post = User.first.posts.create(title: title, description: description)
+        success_response(data: post)
       end
     end
   end
