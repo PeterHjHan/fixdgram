@@ -9,11 +9,13 @@ class GithubService
     @connection = Faraday.new(url: "https://api.github.com/")
     @user = set_user
     @data = []
+    @results = []
   end
 
   def call
     return unless @user
-    get_events
+    get_events 
+    return unless verify_github_user_exists?
     normalize_event_datas
     add_to_database
   end
@@ -27,8 +29,13 @@ class GithubService
   def get_events
     response = @connection.get("/users/#{@username}/events") do | request |
       request.headers['accept'] = 'application/vnd.github+json'
+      request.headers['X-GitHub-Api-Version'] = '2022-11-28'
     end
     @results = JSON.parse(response.body)
+  end
+
+  def verify_github_user_exists?
+    @results["message"]&.downcase != "not found'"
   end
 
   def normalize_event_datas
