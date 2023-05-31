@@ -10,5 +10,6 @@ class API < Grape::API
     error!({ statusCode: 403, message: e})
   end
 
+  mount Fixdgram::AuthenticationAPI
   mount Fixdgram::PostAPI
 end
