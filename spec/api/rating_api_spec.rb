@@ -14,7 +14,7 @@ describe Fixdgram::RatingAPI do
           rating: 4
         }
       }.to_json
-      put '/api/ratings',
+      put '/api/users/ratings',
         headers: { 'Content-Type' => 'application/json', 'Authorization' => user.jti },
         params: params
 

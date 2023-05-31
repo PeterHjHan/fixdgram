@@ -10,18 +10,18 @@ module Fixdgram
     end
 
     post :authentication do
-      ERROR_MESSAGE = error!({statusCode: 403, message: 'User or password is not a match' })
+      ERROR_MESSAGE = {statusCode: 403, message: 'User or password is not a match' }
 
       email = params[:data][:email]
       password = params[:data][:password]
       
       user = User.find_by_email(email)
 
-      return ERROR_MESSAGE unless user
+      return error!(ERROR_MESSAGE) unless user
       
       user.valid_password?(password) ? 
         success_response(data: user.jti) : 
-        ERROR_MESSAGE
+        error!(ERROR_MESSAGE)
     end
   end
 end

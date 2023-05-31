@@ -1,24 +1,22 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+# Fixdgram API
 
-Things you may want to cover:
+FixdGram API exposes a REST API allowing any client to retrieve the data regarding to the application.
 
-* Ruby version
+## Endpoint References
 
-* System dependencies
+#### Headers
 
-* Configuration
+The following headers are required to make receive calls
+* `Content-Type = 'application/json'`
+* `Authorization = '[user-token]'`
 
-* Database creation
+The user-token can be retrieved by using the authentication api route
 
-* Database initialization
+##### Authentication
 
-* How to run the test suite
+| Method | Url |
+| -------|:---:|
+| POST| /api/authentication|
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
