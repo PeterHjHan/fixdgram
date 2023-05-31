@@ -12,6 +12,7 @@ class User < ApplicationRecord
 
   has_many :posts, dependent: :destroy
   has_many :comments, dependent: :destroy
+  has_many :feeds, dependent: :destroy
   has_many :github_posts, dependent: :destroy
 
   def create_four_star_rating_post

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_31_072720) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_31_170330) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -23,6 +23,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_31_072720) do
     t.datetime "updated_at", null: false
     t.index ["commentable_type", "commentable_id"], name: "index_comments_on_commentable"
     t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
+  create_table "feeds", force: :cascade do |t|
+    t.bigint "user_id"
+    t.string "feedable_type"
+    t.bigint "feedable_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["feedable_type", "feedable_id"], name: "index_feeds_on_feedable"
+    t.index ["user_id"], name: "index_feeds_on_user_id"
   end
 
   create_table "github_posts", force: :cascade do |t|
