@@ -11,6 +11,8 @@ class User < ApplicationRecord
          :jwt_authenticatable, jwt_revocation_strategy: self
 
   has_many :posts, dependent: :destroy
+  has_many :comments, dependent: :destroy
+  has_many :github_posts, dependent: :destroy
 
   def create_four_star_rating_post
     return false if votes_for.size < 20
