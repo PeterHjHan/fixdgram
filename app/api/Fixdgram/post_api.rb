@@ -24,8 +24,8 @@ module Fixdgram
         requires :post_id, type: String
       end
       get '/:post_id' do
-        post = Post.includes(:user).find(params[:post_id])
-        data = post.as_json(include: :user)
+        post = Post.includes(:user, :comments).find(params[:post_id])
+        data = post.as_json(include: [:user, :comments])
         success_response(data: data)
       end
     end

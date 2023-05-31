@@ -1,7 +1,8 @@
 require 'rails_helper'
 
 describe Fixdgram::PostAPI do
-  let(:user) { FactoryBot.create(:user_with_posts) }
+  let!(:user) { FactoryBot.create(:user_with_posts) }
+  let!(:comment) { FactoryBot.create(:comment, user: user, commentable: user.posts.second)}
 
   context 'POST /api/posts' do
     it 'fails to create a post without authentication' do
@@ -36,6 +37,18 @@ describe Fixdgram::PostAPI do
       result = JSON.parse(response.body)
       expect(result["statusCode"]).to eq(200)
       expect(result.dig('data', 'user', 'id')).to eq(user.id)
+      expect(result.dig('data', 'comments').length).to eq(0)
+    end
+
+    it 'returns the right data with comments' do
+      get "/api/posts/#{user.posts.second.id}",
+        headers: { 'Content-Type' => 'application/json' }
+
+      result = JSON.parse(response.body)
+
+      expect(result["statusCode"]).to eq(200)
+      expect(result.dig('data', 'user', 'id')).to eq(user.id)
+      expect(result.dig('data', 'comments').length).to eq(1)
     end
 
     it 'returns 404 when there is no post found' do
