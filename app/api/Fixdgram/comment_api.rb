@@ -20,6 +20,8 @@ module Fixdgram
 
         comment = post.comments.create(description: description, user: current_user)
   
+        FeedCreatorService.new(model: comment, user: current_user).call
+
         success_response(data: comment)
       end
 

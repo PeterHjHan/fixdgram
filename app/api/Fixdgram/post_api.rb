@@ -14,7 +14,11 @@ module Fixdgram
         post do
           title = params[:data][:title]
           description = params[:data][:description]
+
           post = User.first.posts.create(title: title, description: description)
+
+          FeedCreatorService.new(model: post, user: current_user).call
+          
           success_response(data: post)
         end
       end

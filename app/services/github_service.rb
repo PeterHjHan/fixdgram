@@ -23,6 +23,11 @@ class GithubService
   def add_to_database
     @data.each do |item|
       github_data = GithubPost.new(item)
+      if github_data.save
+        FeedCreatorService.new(model: github_data, user: @user).call
+      else
+        next
+      end
     end
   end
 
