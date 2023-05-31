@@ -12,6 +12,7 @@ gem "devise"
 gem "devise-jwt"
 gem "faraday"
 gem "grape"
+gem "pagy"
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"

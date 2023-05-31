@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   include Devise::JWT::RevocationStrategies::JTIMatcher
+  include Pagy::Backend
   
   acts_as_voter
   acts_as_votable cacheable_strategy: :update_columns
@@ -18,5 +19,23 @@ class User < ApplicationRecord
   def create_four_star_rating_post
     return false if votes_for.size < 20
     posts.create(title: "Passed 4 stars!") if cached_weighted_average.round(2) >= 4.0
+  end
+
+  def recent_feeds(page_params)
+    begin
+      query = feeds.includes(feedable: [:posts, :comments, :githubs]).order(created_at: :desc)
+      data = []
+      pagy, records = pagy(query, items: 20, page: page_params)
+      records.each do |feed|
+        data.push({
+          created_at: feed.created_at,
+          type: feed.feedable_type,
+          data: feed.feedable
+        })
+      end
+      data
+    rescue => error
+      raise error
+    end
   end
 end
