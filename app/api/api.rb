@@ -11,5 +11,6 @@ class API < Grape::API
   end
 
   mount Fixdgram::AuthenticationAPI
+  mount Fixdgram::CommentAPI
   mount Fixdgram::PostAPI
 end
