@@ -31,11 +31,11 @@ class User < ApplicationRecord
 
       records.each do |feed|
         serializer = ActiveModel::Serializer.serializer_for(feed.feedable)
-        serialized_dadta = ActiveModelSerializers::SerializableResource.new(feed.feedable, serializer: serializer)
+        serialized_data = ActiveModelSerializers::SerializableResource.new(feed.feedable, serializer: serializer)
         data.push({
           created_at: feed.created_at,
           type: feed.feedable_type,
-          data: serialized_dadta.as_json
+          data: serialized_data.as_json
         })
       end
       data

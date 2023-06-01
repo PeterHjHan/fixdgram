@@ -20,6 +20,8 @@ class GithubService
     add_to_database
   end
 
+  private
+
   def add_to_database
     @data.each do |item|
       github_data = GithubPost.new(item)
