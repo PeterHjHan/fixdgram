@@ -5,7 +5,7 @@ class API < Grape::API
   formatter :json, Grape::Formatter::ActiveModelSerializers
 
   rescue_from ActiveRecord::RecordNotFound do |e|
-    error!({ statusCode: 404, message: 'Unable to find comment'})
+    error!({ statusCode: 404, message: 'Unable to find information'})
   end
   rescue_from CanCan::AccessDenied do |e|
     error!({ statusCode: 403, message: e})

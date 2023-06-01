@@ -9,10 +9,10 @@ module Fixdgram
       end
       get do
         user = User.find_by(email: params[:email])
-
+        return error!({statusCode: 404, message: 'Unable to find user'}) unless user
         begin
-          GithubService.new(user: user, username: user.github_username).call if user.github_username?
-          data = user.recent_feeds(params[:page] || 1)
+          GithubService.new(user: user, username: user.github_username).call if user&.github_username?
+          data = user&.recent_feeds(params[:page] || 1)
           success_response(data: data)
         rescue => error
           error!({statusCode: 404, message: error})
