@@ -36,7 +36,7 @@ describe Fixdgram::PostAPI do
 
       result = JSON.parse(response.body)
       expect(result["statusCode"]).to eq(200)
-      expect(result.dig('data', 'user', 'id')).to eq(user.id)
+      expect(result.dig('data', 'user', 'email')).to eq(user.email)
       expect(result.dig('data', 'comments').length).to eq(0)
     end
 
@@ -47,7 +47,7 @@ describe Fixdgram::PostAPI do
       result = JSON.parse(response.body)
 
       expect(result["statusCode"]).to eq(200)
-      expect(result.dig('data', 'user', 'id')).to eq(user.id)
+      expect(result.dig('data', 'user', 'email')).to eq(user.email)
       expect(result.dig('data', 'comments').length).to eq(1)
     end
 
