@@ -11,8 +11,8 @@ module Fixdgram
         user = User.find_by(email: params[:email])
 
         begin
-          GithubService.new(username: user.github_username).call if user.github_username?
-          data = user.recent_feeds(params[:page] || 1).to_json
+          GithubService.new(user: user, username: user.github_username).call if user.github_username?
+          data = user.recent_feeds(params[:page] || 1)
           success_response(data: data)
         rescue => error
           error!({statusCode: 404, message: error})

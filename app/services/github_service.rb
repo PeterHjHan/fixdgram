@@ -4,10 +4,10 @@ class GithubService
   GITHUB_PR_REPO_TYPE = 'PullRequestEvent'
   GITHUB_PUSH_COMMIT_TYPE = 'PushEvent'
 
-  def initialize(username:)
+  def initialize(username:, user:)
     @username = username
+    @user = user
     @connection = Faraday.new(url: "https://api.github.com/")
-    @user = set_user
     @data = []
     @results = []
   end
@@ -40,6 +40,7 @@ class GithubService
   end
 
   def verify_github_user_exists?
+    return true if @results.is_a?(Array)
     @results["message"]&.downcase != "not found'"
   end
 
@@ -50,12 +51,13 @@ class GithubService
         user_id: @user.id,
         created_at: event["created_at"],
         event_id: event["id"],
+        url: event["repo"]["url"],
       }
       case event["type"]
         when GITHUB_CREATE_REPO_TYPE
           params.merge!(normalize_new_repo_data)
         when GITHUB_PR_REPO_TYPE
-          params.merge!(normalize_new_pr_data(event))
+          params.merge!(normalize_pr_data(event))
         when GITHUB_PUSH_COMMIT_TYPE
           params.merge!(normalize_push_commits_data(event))
         else 
@@ -91,10 +93,6 @@ class GithubService
       request_type: 'push_commits',
       description: "pushed #{data["payload"]["commits"].length} commits"
     }
-  end
-
-  def set_user
-    @user = User.find_by(github_username: @username) || nil
   end
 end
 

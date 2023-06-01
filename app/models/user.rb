@@ -2,6 +2,8 @@ class User < ApplicationRecord
   include Devise::JWT::RevocationStrategies::JTIMatcher
   include Pagy::Backend
   
+  NUMBER_OF_ITEMS_PER_PAGE = 15
+
   acts_as_voter
   acts_as_votable cacheable_strategy: :update_columns
 
@@ -25,12 +27,15 @@ class User < ApplicationRecord
     begin
       query = feeds.includes(feedable: [:posts, :comments, :githubs]).order(created_at: :desc)
       data = []
-      pagy, records = pagy(query, items: 20, page: page_params)
+      pagy, records = pagy(query, items: NUMBER_OF_ITEMS_PER_PAGE, page: page_params)
+
       records.each do |feed|
+        serializer = ActiveModel::Serializer.serializer_for(feed.feedable)
+        serialized_dadta = ActiveModelSerializers::SerializableResource.new(feed.feedable, serializer: serializer)
         data.push({
           created_at: feed.created_at,
           type: feed.feedable_type,
-          data: feed.feedable
+          data: serialized_dadta.as_json
         })
       end
       data
