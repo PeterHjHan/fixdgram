@@ -1,9 +1,9 @@
 class API < Grape::API
-  require 'grape/active_model_serializers'
-  include Grape::Formatter::ActiveModelSerializers
   helpers ResponseHelpers, UserHelpers
   prefix 'api'
   format :json
+  formatter :json, Grape::Formatter::ActiveModelSerializers
+
   rescue_from ActiveRecord::RecordNotFound do |e|
     error!({ statusCode: 404, message: 'Unable to find comment'})
   end

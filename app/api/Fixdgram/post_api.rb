@@ -28,17 +28,18 @@ module Fixdgram
         requires :post_id, type: String
       end
       get '/:post_id' do
-        post = Post.includes(:user, :comments).find(params[:post_id])
-        data = post.as_json(include: [:user, :comments])
-      
+        post = Post.includes(user: :comments, comments: :user).find(params[:post_id])
+
         options = { serializer: PostSerializer }
-        serializable_resource = ActiveModelSerializers::SerializableResource.new(post, options)
 
-        byebug
+        serialized_data = ActiveModelSerializers::SerializableResource.new(post, {})
 
-        data
+        data = {
+          **serialized_data.as_json,
+          comments: ActiveModelSerializers::SerializableResource.new(post.comments, each_serializer: CommentSerializer )
+        }
 
-        # success_response(data: data)
+        success_response(data: data)
       end
     end
   end

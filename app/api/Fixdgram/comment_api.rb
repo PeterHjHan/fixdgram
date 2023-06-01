@@ -22,7 +22,12 @@ module Fixdgram
   
         FeedCreatorService.new(model: comment, user: current_user).call
 
-        success_response(data: comment)
+        comment.as_json(include: :user)
+      
+        options = { serializer: CommentSerializer }
+        serialized_data = ActiveModelSerializers::SerializableResource.new(comment, options)
+
+        success_response(data: serialized_data)
       end
 
       desc 'destroy comment'
