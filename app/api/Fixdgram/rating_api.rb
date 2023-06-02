@@ -25,7 +25,7 @@ module Fixdgram
         # the workaround is to destroy and then create again
         user.unliked_by current_user if current_user.voted_for? user
         user.vote_by voter: current_user, vote_weight: rating
-        user.create_four_star_rating_post if user.has_4_star_rating_post
+        user.create_four_star_rating_post unless user.has_4_star_rating_post
         success_response(data: { message: 'Rated!'})
       end
     end
