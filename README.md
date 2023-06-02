@@ -17,6 +17,10 @@ For `Authentication`
 
 When testing for endpoints that require Authorization, use the token
 
+## Usage
+
+There are no actual webpages in the endpoints. It is highly recommended to use a service like [postman](https://www.postman.com/) to send HTTP requests.
+
 ## Endpoint References
 
 [Documentation of Endpoint](https://app.swaggerhub.com/apis-docs/PETERHJHAN_1/Fixdgram/1.0.0)
