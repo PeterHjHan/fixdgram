@@ -23,6 +23,10 @@ class User < ApplicationRecord
     posts.create(title: "Passed 4 stars!") if cached_weighted_average.round(2) >= 4.0
   end
 
+  def has_4_star_rating_post
+    posts.exists?(title: "Passed 4 stars!")
+  end
+
   def recent_feeds(page_params)
     begin
       query = feeds.includes(feedable: [:posts, :comments, :githubs]).order(created_at: :desc)
